@@ -3,64 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Keuangan PRABU</title>
+  <title>E-Hiring Ecogreen | Portal Rekrutmen</title>
+  
+  <!-- Google Font & Favicon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #047857; font-family: 'Segoe UI', sans-serif; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
 
+    body { 
+      background: radial-gradient(circle at 50% 30%, #065f46 0%, #044332 50%, #022c22 100%);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Container Layar Splash */
     .splash {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100vh; gap: 1rem;
-      transition: opacity .5s;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
     }
-    .splash-logo { font-size: 4rem; }
-    .splash-title {
-      color: #fff; font-size: 1.8rem;
-      font-weight: 800; letter-spacing: 2px;
-    }
-    .splash-sub { color: #d1fae5; font-size: .95rem; }
-    .spinner {
-      width: 36px; height: 36px;
-      border: 4px solid rgba(255,255,255,.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin-top: .5rem;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* Logo Badge Eco Container */
+    .brand-icon-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4),
+                  0 0 25px rgba(52, 211, 153, 0.25);
+      margin-bottom: 1.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .brand-icon-wrapper svg {
+      width: 48px;
+      height: 48px;
+      fill: none;
+      stroke: #34d399;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.4));
+    }
+
+    /* Teks Judul & Subtitle */
+    .splash-title {
+      color: #ffffff;
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    .splash-title span {
+      color: #34d399;
+    }
+
+    .splash-sub {
+      color: #a7f3d0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-top: 0.35rem;
+      opacity: 0.9;
+    }
+
+    /* Progress Loader Modern */
+    .loader-container {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 3.5px solid rgba(52, 211, 153, 0.18);
+      border-top-color: #34d399;
+      border-right-color: #10b981;
+      border-radius: 50%;
+      animation: spin 0.85s cubic-bezier(0.55, 0.25, 0.25, 0.7) infinite;
+    }
+
+    .loading-status {
+      font-size: 0.8rem;
+      color: #6ee7b7;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Animasi */
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Tampilan Iframe */
     iframe {
-      display: none; width: 100%;
-      height: 100vh; border: none;
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-<div class="splash" id="splash">
-  <div class="splash-logo">💰</div>
-  <div class="splash-title">LAPORAN KEUANGAN PRABU</div>
-  <div class="splash-sub">Memuat aplikasi...</div>
-  <div class="spinner"></div>
-</div>
+  <!-- Layar Splash Screen -->
+  <div class="splash" id="splash">
+    <!-- Ikon Modern (Briefcase / Recruitment + Eco Leaf) -->
+    <div class="brand-icon-wrapper">
+      <svg viewBox="0 0 24 24">
+        <!-- Tas Rekrutmen -->
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
+        <!-- Daun / Eco Symbol -->
+        <path d="M12 12c2.5-2.5 5 0 5 0s-2.5 2.5-5 0z" stroke="#6ee7b7" fill="rgba(110, 231, 183, 0.3)"></path>
+      </svg>
+    </div>
 
-<iframe
-  id="appFrame"
-  src="https://script.google.com/macros/s/AKfycbzE8cjlupLyQIY1xBEVSaC_wQ9XgH926faJHqoOc7xA6TufEkpzeZQxt4Lyvj7t8CMW/exec"
-  allowfullscreen
-  onload="frameLoaded()">
-</iframe>
+    <!-- Teks Branding -->
+    <h1 class="splash-title">E-HIRING <span>ECOGREEN</span></h1>
+    <p class="splash-sub">Recruitment Portal</p>
 
-<script>
-  function frameLoaded() {
-    document.getElementById("splash").style.opacity = "0";
-    setTimeout(() => {
-      document.getElementById("splash").style.display = "none";
-      document.getElementById("appFrame").style.display = "block";
-    }, 500);
-  }
-</script>
+    <!-- Loading Indicator -->
+    <div class="loader-container">
+      <div class="spinner"></div>
+      <span class="loading-status">Memuat Portal...</span>
+    </div>
+  </div>
+
+  <!-- Google Apps Script Iframe -->
+  <iframe
+    id="appFrame"
+    src="https://script.google.com/macros/s/AKfycbxvngKM78xQC-LGDkWLU8HpUB9pHUWhmb9T39Pl6zwoiZLpSEZ6irT8514IEHYYzX4M/exec"
+    allowfullscreen
+    onload="frameLoaded()">
+  </iframe>
+
+  <script>
+    function frameLoaded() {
+      const splash = document.getElementById("splash");
+      const appFrame = document.getElementById("appFrame");
+      
+      // Animasi Fade Out Halus
+      splash.style.opacity = "0";
+      setTimeout(() => {
+        splash.style.display = "none";
+        appFrame.style.display = "block";
+      }, 600);
+    }
+  </script>
 
 </body>
 </html>
