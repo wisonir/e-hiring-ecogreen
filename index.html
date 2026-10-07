@@ -5,188 +5,242 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-Hiring Ecogreen | Portal Rekrutmen</title>
   
-  <!-- Favicon Tab Browser -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://www.ecogreenoleo.com/frontend/web/img/favicon.png">
   <link rel="apple-touch-icon" href="https://www.ecogreenoleo.com/frontend/web/img/favicon.png">
 
-  <!-- Google Font -->
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            navy: {
+              900: '#0f172a',
+              800: '#1e293b',
+              600: '#475569',
+            }
+          },
+          animation: {
+            'spin-slow': 'spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite',
+            'float-subtle': 'float 3.5s ease-in-out infinite',
+            'pulse-subtle': 'pulseSoft 2s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-5px)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.65' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body { 
-      background: radial-gradient(circle at 50% 30%, #065f46 0%, #044332 50%, #022c22 100%);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
       overflow: hidden;
       height: 100vh;
       width: 100vw;
     }
 
-    /* Container Layar Splash */
-    .splash {
+    /* Background bersih dengan subtle mint aura khas UI referensi */
+    .saas-bg-glow {
+      background: 
+        radial-gradient(circle at 50% 25%, rgba(209, 250, 229, 0.55) 0%, rgba(240, 253, 244, 0.3) 40%, rgba(248, 250, 252, 1) 75%),
+        #f8fafc;
+    }
+
+    /* Splash Screen Overlay */
+    #splash {
       position: fixed;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       z-index: 9999;
-      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
-    }
-
-    /* Logo Badge Eco Container */
-    .brand-icon-wrapper {
-      position: relative;
-      width: 96px;
-      height: 96px;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4),
-                  0 0 25px rgba(52, 211, 153, 0.25);
-      margin-bottom: 1.5rem;
-      animation: float 3s ease-in-out infinite;
-      padding: 18px;
-    }
-
-    /* Gambar Logo Ecogreen */
-    .brand-icon-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
-    }
-
-    /* Teks Judul & Subtitle */
-    .splash-title {
-      color: #ffffff;
-      font-size: 2.1rem;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      text-align: center;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      line-height: 1.2;
-    }
-
-    .splash-title span {
-      color: #34d399;
-    }
-
-    .splash-sub {
-      color: #a7f3d0;
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      margin-top: 0.35rem;
-      opacity: 0.9;
-    }
-
-    /* Progress Loader Modern */
-    .loader-container {
-      margin-top: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
-    .spinner {
-      width: 42px;
-      height: 42px;
-      border: 3.5px solid rgba(52, 211, 153, 0.18);
-      border-top-color: #34d399;
-      border-right-color: #10b981;
-      border-radius: 50%;
-      animation: spin 0.85s cubic-bezier(0.55, 0.25, 0.25, 0.7) infinite;
-    }
-
-    .loading-status {
-      font-size: 0.8rem;
-      color: #6ee7b7;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    /* Animasi */
-    @keyframes spin { 
-      to { transform: rotate(360deg); } 
-    }
-
-    @keyframes float { 
-      0%, 100% { transform: translateY(0px); } 
-      50% { transform: translateY(-6px); } 
-    }
-
-    /* Tampilan Iframe */
-    iframe {
+    /* Iframe Wrapper */
+    #appFrame {
       display: none;
       width: 100vw;
       height: 100vh;
       border: none;
+      background-color: #ffffff;
+    }
+
+    /* Progress Bar Shimmer Effect */
+    .progress-bar-fill {
+      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #059669 0%, #10b981 50%, #34d399 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.8s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
   </style>
 </head>
-<body>
+<body class="saas-bg-glow antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- Layar Splash Screen -->
-  <div class="splash" id="splash">
-    <!-- Logo Resmi Ecogreen -->
-    <div class="brand-icon-wrapper">
-      <svg viewBox="0 0 24 24">
-        <!-- Kepala & Badan Kandidat -->
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-        <circle cx="9" cy="7" r="4"></circle>
-        <!-- Kaca Pembesar / Talent Search -->
-        <circle cx="17" cy="11" r="3"></circle>
-        <line x1="21" y1="15" x2="19.2" y2="13.2"></line>
-      </svg>
+  <div id="splash" class="saas-bg-glow px-4 sm:px-6">
+    <div class="max-w-xl w-full flex flex-col items-center text-center animate-float-subtle">
+      
+      <!-- Logo Header ala ArenaHub Bar (Badge Box Hijau + Tag Pill ENGINE) -->
+      <div class="flex items-center gap-2.5 mb-7 bg-white/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow transition-shadow">
+        <!-- Logo Icon Box -->
+        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 font-extrabold text-xl tracking-tight">
+          E
+        </div>
+        
+        <!-- App Name -->
+        <div class="flex items-center gap-2">
+          <span class="text-navy-900 font-extrabold text-lg tracking-tight">Ecogreen</span>
+          <span class="text-xs font-bold uppercase tracking-wider bg-brand-50 text-brand-700 px-2 py-0.5 rounded-md border border-brand-200">
+            E-HIRING
+          </span>
+        </div>
+      </div>
+
+      <!-- Top Badge Pill (Persis seperti "Multi-Tenant Sports Booking Engine") -->
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-50/90 border border-brand-200 text-brand-700 text-xs font-semibold mb-4 tracking-wide shadow-sm">
+        <svg class="w-3.5 h-3.5 text-brand-600 animate-pulse-subtle" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Portal Rekrutmen Terpadu & Mandiri</span>
+      </div>
+
+      <!-- Main Headline (Tipografi bold navy seperti di foto) -->
+      <h1 class="text-3xl sm:text-4xl md:text-[2.6rem] font-extrabold text-navy-900 tracking-tight leading-[1.2] mb-3">
+        Satu Portal, Masa Depan <br class="hidden sm:inline">
+        <span class="text-brand-600">Karir Profesional Anda</span>
+      </h1>
+
+      <!-- Subtitle Description -->
+      <p class="text-navy-600 text-sm sm:text-base font-normal max-w-lg leading-relaxed mb-8">
+        Mempersiapkan lingkungan rekrutmen terintegrasi untuk kandidat terbaik Ecogreen Oleochemicals.
+      </p>
+
+      <!-- Loading Indicator Section -->
+      <div class="w-full max-w-xs flex flex-col items-center gap-3">
+        <!-- Progress Bar Track -->
+        <div class="w-full h-1.5 bg-slate-200/90 rounded-full overflow-hidden shadow-inner">
+          <div id="loadingProgress" class="progress-bar-fill h-full w-1/4 rounded-full"></div>
+        </div>
+
+        <!-- Status & Spinner -->
+        <div class="flex items-center gap-2 mt-1">
+          <!-- Spinner -->
+          <div class="w-4 h-4 border-2 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+          <span id="loadingText" class="text-xs font-semibold text-slate-500 tracking-wide uppercase">
+            Menghubungkan ke Portal...
+          </span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Teks Branding -->
-    <h1 class="splash-title">E-HIRING <span>ECOGREEN</span></h1>
-    <p class="splash-sub">Recruitment Portal</p>
-
-    <!-- Loading Indicator -->
-    <div class="loader-container">
-      <div class="spinner"></div>
-      <span class="loading-status">Memuat Portal...</span>
+    <!-- Footer Security Notice ala SaaS -->
+    <div class="absolute bottom-6 flex items-center gap-2 text-xs text-slate-400 font-medium">
+      <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+      </svg>
+      <span>Terenkripsi & Terisolasi Mandiri • PT Ecogreen Oleochemicals</span>
     </div>
   </div>
 
-  <!-- Google Apps Script Iframe -->
+  <!-- Target App Script Iframe -->
   <iframe
     id="appFrame"
     src="https://script.google.com/macros/s/AKfycbxvngKM78xQC-LGDkWLU8HpUB9pHUWhmb9T39Pl6zwoiZLpSEZ6irT8514IEHYYzX4M/exec"
+    allow="clipboard-read; clipboard-write"
     allowfullscreen
-    onload="frameLoaded()">
+    onload="handleFrameReady()">
   </iframe>
 
   <script>
-    function frameLoaded() {
-      const splash = document.getElementById("splash");
-      const appFrame = document.getElementById("appFrame");
-      
-      // Animasi Fade Out Halus
-      splash.style.opacity = "0";
+    let isLoaded = false;
+    const splash = document.getElementById("splash");
+    const appFrame = document.getElementById("appFrame");
+    const progressBar = document.getElementById("loadingProgress");
+    const loadingText = document.getElementById("loadingText");
+
+    // Simulasi step progres saat menunggu loading iframe selesai
+    let progress = 25;
+    const progressInterval = setInterval(() => {
+      if (progress < 85) {
+        progress += Math.floor(Math.random() * 12) + 5;
+        if (progress > 85) progress = 85;
+        progressBar.style.width = progress + "%";
+        
+        if (progress > 50) {
+          loadingText.innerText = "Menyiapkan Data Rekrutmen...";
+        }
+      }
+    }, 450);
+
+    // Dipanggil saat iframe selesai dimuat
+    function handleFrameReady() {
+      if (isLoaded) return;
+      isLoaded = true;
+      clearInterval(progressInterval);
+
+      // Penuhkan progress bar
+      progressBar.style.width = "100%";
+      loadingText.innerText = "Portal Siap!";
+
+      // Animasi transisi keluar yang elegan
       setTimeout(() => {
-        splash.style.display = "none";
+        splash.style.opacity = "0";
+        splash.style.visibility = "hidden";
         appFrame.style.display = "block";
-      }, 600);
+      }, 500);
     }
+
+    // Fallback: Jika koneksi Google Script lambat, portal tetap muncul maksimal 8 detik
+    setTimeout(() => {
+      if (!isLoaded) {
+        handleFrameReady();
+      }
+    }, 8000);
   </script>
 
 </body>
